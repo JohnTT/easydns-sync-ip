@@ -5,20 +5,28 @@ import (
 	"time"
 
 	"github.com/JohnTT/easydns-sync-ip/internal/config"
+	"github.com/JohnTT/easydns-sync-ip/internal/easydns"
 )
 
-func update() {
-	log.Printf("Ticker triggered at %v", time.Now())
+var client *easydns.Client
+
+func init() {
+	client = easydns.NewClient()
 }
 
 func main() {
-	// Initial on program startup.
-	update()
+	// Initial update on program startup.
+	log.Printf("client update interval is %v seconds", config.Get().UpdateInterval)
+	if err := client.Update(); err != nil {
+		log.Printf("client.Update error: %v", err)
+	}
 
 	// Start periodic sync
-	ticker := time.NewTicker(time.Duration(config.Get().TickerSeconds) * time.Second)
+	ticker := time.NewTicker(time.Duration(config.Get().UpdateInterval) * time.Second)
 	defer ticker.Stop()
 	for range ticker.C {
-		update()
+		if err := client.Update(); err != nil {
+			log.Printf("client.Update error: %v", err)
+		}
 	}
 }
