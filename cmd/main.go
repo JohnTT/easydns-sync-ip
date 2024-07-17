@@ -18,7 +18,7 @@ func main() {
 	// Initial update on program startup.
 	log.Printf("client update interval is %v seconds", config.Get().UpdateInterval)
 	if err := client.Update(); err != nil {
-		log.Printf("client.Update error %v", err)
+		log.Printf("client.Update error: %v", err)
 	}
 
 	// Start periodic sync
@@ -26,7 +26,7 @@ func main() {
 	defer ticker.Stop()
 	for range ticker.C {
 		if err := client.Update(); err != nil {
-			log.Printf("client.Update error %v", err)
+			log.Printf("client.Update error: %v", err)
 		}
 	}
 }
