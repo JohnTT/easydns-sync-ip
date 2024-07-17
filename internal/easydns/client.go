@@ -33,6 +33,13 @@ func NewClient() *Client {
 		},
 	}
 
+	// Override the server configurations from env
+	cfg.Servers = openapi.ServerConfigurations{
+		{
+			URL: config.Get().Host,
+		},
+	}
+
 	apiClient := openapi.NewAPIClient(cfg)
 	return &Client{
 		basicAuthHttpClient: cfg.HTTPClient,
@@ -78,6 +85,9 @@ func (c *Client) findZoneRecord(host string) (ZoneRecord, error) {
 	_, resp, err := c.ZoneAPI.ListZone(context.TODO(), config.Get().Domain).Execute()
 	if resp == nil && err != nil {
 		return ZoneRecord{}, err
+	}
+	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
+		return ZoneRecord{}, fmt.Errorf("response did not contain 2xx code: %+v", resp)
 	}
 	defer resp.Body.Close()
 
