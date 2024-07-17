@@ -8,6 +8,7 @@ type Config struct {
 	Host          string `env:"EASYDNS_HOST,required"`
 	Token         string `env:"EASYDNS_TOKEN,required"`
 	Key           string `env:"EASYDNS_KEY,required"`
+	Domain        string `env:"EASYDNS_DOMAIN,required"`
 	TickerSeconds uint   `env:"TickerSeconds" envDefault:"30"`
 }
 

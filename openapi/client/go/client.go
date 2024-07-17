@@ -50,41 +50,41 @@ type APIClient struct {
 
 	// API Services
 
-	AddAPI *AddAPIService
+	// AddAPI *AddAPIService
 
-	AsyncAPI *AsyncAPIService
+	// AsyncAPI *AsyncAPIService
 
-	DeleteAPI *DeleteAPIService
+	// DeleteAPI *DeleteAPIService
 
-	DomainAPI *DomainAPIService
+	// DomainAPI *DomainAPIService
 
-	GeoAPI *GeoAPIService
+	// GeoAPI *GeoAPIService
 
-	GlueAPI *GlueAPIService
+	// GlueAPI *GlueAPIService
 
-	ListAPI *ListAPIService
+	// ListAPI *ListAPIService
 
-	MailAPI *MailAPIService
+	// MailAPI *MailAPIService
 
-	NameServerAPI *NameServerAPIService
+	// NameServerAPI *NameServerAPIService
 
-	ParsedAPI *ParsedAPIService
+	// ParsedAPI *ParsedAPIService
 
-	ReadAPI *ReadAPIService
+	// ReadAPI *ReadAPIService
 
-	RegisterAPI *RegisterAPIService
+	// RegisterAPI *RegisterAPIService
 
-	ReloadAPI *ReloadAPIService
+	// ReloadAPI *ReloadAPIService
 
-	SearchAPI *SearchAPIService
+	// SearchAPI *SearchAPIService
 
-	SecondaryAPI *SecondaryAPIService
+	// SecondaryAPI *SecondaryAPIService
 
-	ServiceAPI *ServiceAPIService
+	// ServiceAPI *ServiceAPIService
 
-	UserAPI *UserAPIService
+	// UserAPI *UserAPIService
 
-	WriteAPI *WriteAPIService
+	// WriteAPI *WriteAPIService
 
 	ZoneAPI *ZoneAPIService
 }
@@ -104,25 +104,25 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.cfg = cfg
 	c.common.client = c
 
-	// API Services
-	c.AddAPI = (*AddAPIService)(&c.common)
-	c.AsyncAPI = (*AsyncAPIService)(&c.common)
-	c.DeleteAPI = (*DeleteAPIService)(&c.common)
-	c.DomainAPI = (*DomainAPIService)(&c.common)
-	c.GeoAPI = (*GeoAPIService)(&c.common)
-	c.GlueAPI = (*GlueAPIService)(&c.common)
-	c.ListAPI = (*ListAPIService)(&c.common)
-	c.MailAPI = (*MailAPIService)(&c.common)
-	c.NameServerAPI = (*NameServerAPIService)(&c.common)
-	c.ParsedAPI = (*ParsedAPIService)(&c.common)
-	c.ReadAPI = (*ReadAPIService)(&c.common)
-	c.RegisterAPI = (*RegisterAPIService)(&c.common)
-	c.ReloadAPI = (*ReloadAPIService)(&c.common)
-	c.SearchAPI = (*SearchAPIService)(&c.common)
-	c.SecondaryAPI = (*SecondaryAPIService)(&c.common)
-	c.ServiceAPI = (*ServiceAPIService)(&c.common)
-	c.UserAPI = (*UserAPIService)(&c.common)
-	c.WriteAPI = (*WriteAPIService)(&c.common)
+	// // API Services
+	// c.AddAPI = (*AddAPIService)(&c.common)
+	// c.AsyncAPI = (*AsyncAPIService)(&c.common)
+	// c.DeleteAPI = (*DeleteAPIService)(&c.common)
+	// c.DomainAPI = (*DomainAPIService)(&c.common)
+	// c.GeoAPI = (*GeoAPIService)(&c.common)
+	// c.GlueAPI = (*GlueAPIService)(&c.common)
+	// c.ListAPI = (*ListAPIService)(&c.common)
+	// c.MailAPI = (*MailAPIService)(&c.common)
+	// c.NameServerAPI = (*NameServerAPIService)(&c.common)
+	// c.ParsedAPI = (*ParsedAPIService)(&c.common)
+	// c.ReadAPI = (*ReadAPIService)(&c.common)
+	// c.RegisterAPI = (*RegisterAPIService)(&c.common)
+	// c.ReloadAPI = (*ReloadAPIService)(&c.common)
+	// c.SearchAPI = (*SearchAPIService)(&c.common)
+	// c.SecondaryAPI = (*SecondaryAPIService)(&c.common)
+	// c.ServiceAPI = (*ServiceAPIService)(&c.common)
+	// c.UserAPI = (*UserAPIService)(&c.common)
+	// c.WriteAPI = (*WriteAPIService)(&c.common)
 	c.ZoneAPI = (*ZoneAPIService)(&c.common)
 
 	return c
