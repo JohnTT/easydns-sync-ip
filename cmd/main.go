@@ -1,7 +1,8 @@
 package main
 
 import (
-	"log"
+	"log/slog"
+	"os"
 	"time"
 
 	"github.com/JohnTT/easydns-sync-ip/internal/config"
@@ -11,14 +12,15 @@ import (
 var client *easydns.Client
 
 func init() {
+	slog.SetDefault(slog.New(slog.NewJSONHandler(os.Stdout, nil)))
 	client = easydns.NewClient()
 }
 
 func main() {
 	// Initial update on program startup.
-	log.Printf("client update interval is %v seconds", config.Get().UpdateInterval)
+	slog.Info("client update interval", "seconds", config.Get().UpdateInterval)
 	if err := client.Update(); err != nil {
-		log.Printf("client.Update error: %v", err)
+		slog.Error("client.Update failed", "error", err)
 	}
 
 	// Start periodic sync
@@ -26,7 +28,7 @@ func main() {
 	defer ticker.Stop()
 	for range ticker.C {
 		if err := client.Update(); err != nil {
-			log.Printf("client.Update error: %v", err)
+			slog.Error("client.Update failed", "error", err)
 		}
 	}
 }

@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"log"
+	"log/slog"
 	"net"
 	"net/http"
 	"strconv"
@@ -54,13 +54,11 @@ func (c *Client) Update() error {
 	if err != nil {
 		return err
 	}
-	log.Printf("public IP address is %+v", ip)
 
 	zoneRecord, err := c.findZoneRecord(config.Get().RecordHost)
 	if err != nil {
 		return fmt.Errorf("could not find zone record: %w", err)
 	}
-	log.Printf("found zone record %+v", zoneRecord)
 
 	// Done, since our public IP address matches the DNS record
 	if ip == zoneRecord.Rdata {
@@ -70,10 +68,12 @@ func (c *Client) Update() error {
 	// Otherwise, update the DNS record with the new public IP address
 	// Sleep for a couple seconds to avoid being rate limited.
 	time.Sleep(2 * time.Second)
+	oldIp := zoneRecord.Rdata
 	zoneRecord.Rdata = ip
 	if err := c.updateZoneRecord(zoneRecord); err != nil {
 		return err
 	}
+	slog.Info("updated zone record", "oldIp", oldIp, "newIp", ip, "zoneRecord", zoneRecord)
 
 	return nil
 }
@@ -132,8 +132,6 @@ func (c *Client) getPublicIp() (string, error) {
 }
 
 func (c *Client) updateZoneRecord(record ZoneRecord) error {
-	log.Printf("mismatch detected, updating zone record to %+v", record)
-
 	id, err := strconv.ParseInt(record.ID, 10, 64)
 	if err != nil {
 		return err
